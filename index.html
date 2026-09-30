@@ -336,6 +336,68 @@
 
     .sources a { color: #1d4ed8; font-weight: 800; }
 
+    .unit-trigger {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      width: 100%;
+      border: 0;
+      border-radius: 8px;
+      padding: 2px 4px;
+      margin: -2px -4px 7px;
+      background: transparent;
+      color: inherit;
+      text-align: left;
+      font: inherit;
+      font-size: 1.04rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .unit-trigger:hover { color: #1d4ed8; background: #eff6ff; }
+    .unit-trigger:focus-visible, .bridge-card:focus-visible, .bridge-open:focus-visible,
+    .dialog-close:focus-visible { outline: 3px solid #60a5fa; outline-offset: 3px; }
+    .unit-trigger .dot { margin-top: .55rem; }
+    .bridge-hint { display: block; margin: -2px 0 0 17px; color: #64748b; font-size: .82rem; font-weight: 700; }
+
+    .bridge-overview { margin-top: 38px; padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: #f8fbff; }
+    .bridge-overview h2 { margin: 0 0 5px; }
+    .bridge-intro { margin: 0 0 16px; color: var(--muted); }
+    .bridge-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .bridge-card { min-height: 112px; border: 1px solid #cbd5e1; border-radius: 12px; padding: 14px; background: #fff; color: var(--ink); text-align: left; font: inherit; cursor: pointer; }
+    .bridge-card:hover { border-color: #60a5fa; box-shadow: 0 8px 18px rgba(37,99,235,.1); transform: translateY(-1px); }
+    .bridge-card strong { display: block; margin-bottom: 5px; color: #1d4ed8; }
+    .bridge-card span { color: var(--muted); font-size: .9rem; }
+
+    .bridge-dialog { width: min(760px, calc(100% - 24px)); max-height: min(82vh, 820px); padding: 0; overflow: hidden; border: 1px solid #cbd5e1; border-radius: 18px; color: var(--ink); box-shadow: 0 24px 80px rgba(15,23,42,.28); }
+    .bridge-dialog::backdrop { background: rgba(15,23,42,.54); backdrop-filter: blur(3px); }
+    .dialog-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 20px 22px 15px; background: linear-gradient(135deg,#eff6ff,#f0fdfa); border-bottom: 1px solid var(--line); }
+    .dialog-head h2 { margin: 0; font-size: 1.3rem; line-height: 1.35; }
+    .dialog-head p { margin: 5px 0 0; color: var(--muted); }
+    .dialog-close { flex: 0 0 auto; min-width: 42px; min-height: 42px; border: 1px solid var(--line); border-radius: 50%; background: white; color: var(--ink); font-size: 1.4rem; cursor: pointer; }
+    .dialog-body { max-height: calc(min(82vh, 820px) - 106px); overflow: auto; padding: 18px 22px 24px; }
+    .bridge-caveat { margin: 0 0 15px; padding: 11px 13px; border-left: 4px solid #0f766e; border-radius: 6px; background: #f0fdfa; color: #134e4a; font-size: .94rem; }
+    .bridge-timeline { display: grid; gap: 10px; }
+    .bridge-step { display: grid; grid-template-columns: 78px minmax(0,1fr); gap: 12px; padding: 13px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+    .bridge-step.is-current { border-color: #60a5fa; box-shadow: inset 4px 0 #2563eb; background: #f8fbff; }
+    .bridge-grade { font-weight: 900; color: #1d4ed8; }
+    .bridge-step h3 { margin: 0 0 4px; font-size: 1rem; }
+    .bridge-step p { margin: 0; color: #475569; font-size: .93rem; }
+    .bridge-units { margin-top: 8px; display: grid; gap: 5px; }
+    .bridge-unit { border-radius: 7px; padding: 6px 8px; background: #f1f5f9; font-size: .89rem; }
+    .bridge-unit b { color: #334155; }
+    .bridge-gap { color: #64748b; font-style: italic; }
+    .bridge-source { margin: 13px 0 0; color: #64748b; font-size: .85rem; }
+
+    @media (max-width: 760px) { .bridge-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (max-width: 560px) {
+      .bridge-grid { grid-template-columns: 1fr; }
+      .bridge-overview { padding: 16px; }
+      .dialog-head, .dialog-body { padding-left: 15px; padding-right: 15px; }
+      .bridge-step { grid-template-columns: 1fr; gap: 3px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .bridge-card:hover { transform: none; } }
+
     @media (max-width: 980px) {
       .toolbar { grid-template-columns: 1fr; }
       .chips { justify-content: flex-start; }
@@ -441,7 +503,21 @@
       <h2>資料來源與整理說明</h2>
       <p>國小資料依 2026-06-22 可公開查閱之三家官方教材博覽會與簡介本整理：<a href="https://945cloud.knsh.com.tw/show/E/expo/inner-page.html?expo=textbook&subject=science" target="_blank" rel="noopener">康軒國小教材博覽會自然</a>、<a href="https://el.hle.com.tw/class/natural/index.html" target="_blank" rel="noopener">翰林 115 國小教材博覽會自然</a>、<a href="https://naniexpo.nani.com.tw/template/subject.php?grade=science" target="_blank" rel="noopener">南一教材博覽會自然</a>。國中資料主要依據 <a href="https://affairs.kh.edu.tw/4132/page/view/56?cat=22" target="_blank" rel="noopener">高雄市立燕巢國中教務處 115 學年課程計畫相關頁</a>中「115學年書商版課程計畫」所列南一、康軒、翰林連結，以及 <a href="https://www.knsh.com.tw/service/plan" target="_blank" rel="noopener">康軒課程計畫官方頁</a>與三家國中教材資源入口。表格文字以課程架構/單元架構為主，僅做版面重排、摘要與檢索化。</p>
     </section>
+
+    <section class="bridge-overview" id="bridge-overview" aria-labelledby="bridge-overview-title">
+      <h2 id="bridge-overview-title">三至九年級課程銜接地圖</h2>
+      <p class="bridge-intro">選一個主題查看三家版本在各年級實際列出的相關單元。也可直接點上方任一單元名稱查看它的跨年級脈絡。</p>
+      <div class="bridge-grid" id="bridge-list"></div>
+    </section>
   </main>
+
+  <dialog class="bridge-dialog" id="bridge-dialog" aria-labelledby="bridge-dialog-title">
+    <div class="dialog-head">
+      <div><h2 id="bridge-dialog-title">課程銜接</h2><p id="bridge-dialog-subtitle"></p></div>
+      <button class="dialog-close" type="button" aria-label="關閉銜接說明">×</button>
+    </div>
+    <div class="dialog-body" id="bridge-dialog-body"></div>
+  </dialog>
 
   <script id="course-data" type="application/json">
 {
@@ -2102,8 +2178,77 @@
     const content = document.getElementById("content");
     const searchInput = document.getElementById("search");
     const noResult = document.getElementById("noResult");
+    const bridgeDialog = document.getElementById("bridge-dialog");
+    const bridgeList = document.getElementById("bridge-list");
+    const bridgeDialogTitle = document.getElementById("bridge-dialog-title");
+    const bridgeDialogSubtitle = document.getElementById("bridge-dialog-subtitle");
+    const bridgeDialogBody = document.getElementById("bridge-dialog-body");
     let currentLevel = "all";
     let currentPublisher = "all";
+
+    // 只依課程表已列出的單元名稱、標籤與活動文字配對；跨冊說明屬課綱導向的教學脈絡整理。
+    const BRIDGE_PATHWAYS = [
+      { id:"solutions", title:"溶解、水溶液與混合物分離", keywords:/溶解|水溶液|溶液|酸鹼|酸、鹼|酸與鹼|混合物的分離|物質與分離|認識物質與溶液|物質能溶解/, stage:"從可觀察的溶解現象，逐步整理水溶液的性質，再進入濃度與混合物分離。課綱的水溶液內容在國中階段延伸到電解質、離子、酸鹼反應與濃度；七年級生命科學與九年級所列單元沒有直接水溶液單元。", question:"同一種物質溶進水裡後，如何從可見現象走向溶液性質與分離方法？", standards:"課綱跨科概念 INa、INb；國中水溶液中的變化（Jb）、酸鹼反應（Jd）。" },
+      { id:"matter-change", title:"物質性質、溫度變化與化學反應", keywords:/溫度改變對|溫度與物質變化|物質變化|物質變變變|物質受熱|燃燒|生鏽|化學反應|氧化還原|原子與分子|物質的組成|有機化合物/, stage:"由材料與溫度造成的可觀察變化，延伸至燃燒、生鏽等化學變化，再以原子重新排列、反應表示與守恆等模型解釋。溶解本身不等同化學反應，因此和水溶液路徑分開呈現。", question:"怎樣用觀察證據分辨物理變化與化學反應，並逐步建立微粒模型？", standards:"課綱物質組成與特性（A）、溫度與熱量（Bb）、物質反應規律（Ja）、氧化還原（Jc）。" },
+      { id:"plants", title:"植物構造、生長與繁殖", keywords:/植物|蔬菜/, stage:"由觀察植物身體、照顧與生長，延伸至植物構造和功能、繁殖，再連到國中細胞、營養與運輸等生命功能。不同出版社把這些內容安排在不同冊次。", question:"植物的構造如何幫助它生長、取得資源並繁殖？", standards:"課綱構造與功能 INb（Db、Da）及延續 INd（Ga）。" },
+      { id:"life", title:"動物、生物功能與生命延續", keywords:/動物|昆蟲|生命世界|細胞|生物體|養分與能量|生物的營養|生物的運輸|協調作用|生殖|遺傳|演化|生物的分類|生命的延續|生物圈中的生物/, stage:"由動物外形、運動與生存觀察，銜接生物體構造、細胞、營養運輸與協調，再到生殖、遺傳及演化。這是主題脈絡，不代表每個出版社都按同一順序編排。", question:"從可觀察的生物特徵，如何逐步解釋生命功能與延續？", standards:"課綱構造與功能 INb、演化與延續 INd、生物與環境 INe。" },
+      { id:"ecology", title:"生物與環境、生態及永續", keywords:/生態|水生生物|水域環境|水中生物|生物間|生物與環境|生物多樣性|保育|族群|群落|環境變遷|環境保育|寰宇永續|地球的環境與生態|我們只有一個地球/, stage:"由生物與棲地的觀察，發展到族群、群集、生態系中的交互作用，再討論人類活動、生物多樣性與保育行動。", question:"環境條件與生物互動如何影響生態系，哪些行動能減少衝擊？", standards:"課綱生物與環境（L）、生物多樣性（Gc）及資源與永續（N）。" },
+      { id:"weather", title:"水循環、天氣與氣候", keywords:/天氣|氣象|大氣|水循環|颱風|海洋|水圈|季節與生活|空氣和水|水和天氣/, stage:"由空氣、水與日常天氣觀察，銜接天氣觀測和預報，再以大氣、水圈、海洋與氣候系統解釋較大尺度的變化及防災。", question:"局部觀測到的天氣，如何連結大氣、水圈與較長期的氣候變化？", standards:"課綱變動的地球（I：Ib、Ic）及氣候變遷（Nb）。" },
+      { id:"earth", title:"地表、岩石與地球變動", keywords:/地表|大地|地層|板塊|岩石|地震|地質|化石|地球內部|地表環境|地球環境導論/, stage:"由地表材料、地景變化與災害觀察，延伸至岩石、地層與地表作用，再以地球內部及板塊作用解釋地震、火山與地質歷史。", question:"看見的地表變化，如何用岩石、地層與地球內部作用解釋？", standards:"課綱變動的地球（I：Ia）及地球歷史（H：Hb）。" },
+      { id:"motion", title:"力、運動與機械", keywords:/生活中的力|力與運動|運動與力|力的作用|力與壓力|力學|簡單機械|施力工具|槓桿|滑輪|輪軸|摩擦力|浮力|運動的描述|直線運動|力的測量|運動定律|重力|牛頓/, stage:"由生活中的推拉、磁力或簡單工具觀察，逐步比較和表示力、描述運動，再進入合力、運動定律、功與機械效率。小學早期單元只在內容確實涉及力或工具時列入。", question:"怎樣把生活中的推拉現象，逐步整理成可表示、量測和解釋的力學？", standards:"課綱系統與尺度 INc（Eb）及能量形式與轉換 INa（Ba）。" },
+      { id:"energy-heat", title:"能量、溫度與熱傳播", keywords:/能量|能源|熱|溫度|燃燒|保溫|散熱|熱量|熱的傳播/, stage:"由溫度改變與燃燒等可觀察現象，發展到熱傳播與能源轉換，再以熱量、能量守恆與效率解釋日常系統。", question:"物體受熱或能量轉換時，哪些量改變、能量又如何傳遞？", standards:"課綱能量形式、轉換及流動（B：Ba、Bb、Nc）。" },
+      { id:"sound-light", title:"聲音、光與波動", keywords:/聲音|聲光|聲波|波動|光學|光的|光和|光與|影像|折射|反射|樂器|噪音|色光/, stage:"由聲音和光的生活現象與簡單實驗，逐步用波的傳播、頻率、反射、折射和成像模型解釋觀察結果。", question:"從聽見或看見的現象，如何建立聲波與光學模型？", standards:"課綱自然現象與交互作用（K：Ka）。" },
+      { id:"electric-magnetic", title:"磁力、電路與電磁作用", keywords:/磁鐵|磁力|地磁|電路|電磁|電流|電壓|電阻|導電|電學|指北針|電池|發電機|馬達/, stage:"由磁鐵與簡單電路的操作，逐漸探究電磁鐵、電流磁效應、電路量與電磁感應。磁力、電路和電磁感應是相關但不同的概念，路徑說明會保留其差異。", question:"磁場、電流與電路如何在後續課程中逐步連結？", standards:"課綱自然現象與交互作用（K：Kc）及生活中的科學應用（Mc）。" },
+      { id:"space", title:"日月星辰與宇宙", keywords:/天空|太陽|月亮|月相|星空|星星|天文|宇宙|太陽系|日月地|地球的夥伴/, stage:"由白天夜晚、日月位置與月相觀察，發展至星空、太陽系和宇宙尺度，並以日地月關係解釋週期現象。", question:"天空中週期性的變化，如何透過日地月與太陽系模型說明？", standards:"課綱系統與尺度 INc（Ed）、變動的地球（Id）。" }
+    ];
+
+    const gradeNums = {"三":3,"四":4,"五":5,"六":6,"七":7,"八":8,"九":9};
+    const gradeLabel = n => `${n}年級`;
+    const getUnitText = unit => [unit.u, unit.t || "", ...(unit.l || [])].join(" ");
+    const getPathMatches = path => {
+      const matches = [];
+      Object.values(data).forEach(grades => Object.entries(grades).forEach(([term, publishers]) => {
+        const n = gradeNums[term[0]];
+        Object.entries(publishers).forEach(([publisher, units]) => units.forEach(unit => {
+          if (path.keywords.test(getUnitText(unit))) matches.push({ n, term, publisher, unit });
+        }));
+      }));
+      return matches;
+    };
+    const pathwayMatches = new Map(BRIDGE_PATHWAYS.map(path => [path.id, getPathMatches(path)]));
+    const usablePathways = BRIDGE_PATHWAYS.filter(path => new Set(pathwayMatches.get(path.id).map(item => item.n)).size > 1);
+    const findPathwaysForUnit = unit => usablePathways.filter(path => path.keywords.test(getUnitText(unit)));
+
+    function renderBridgeOverview() {
+      bridgeList.innerHTML = usablePathways.map(path => {
+        const grades = [...new Set(pathwayMatches.get(path.id).map(item => item.n))].sort((a,b) => a-b);
+        return `<button type="button" class="bridge-card" data-bridge-path="${path.id}"><strong>${path.title}</strong><span>${grades.map(gradeLabel).join("・")}｜查看版本單元與銜接說明</span></button>`;
+      }).join("");
+    }
+
+    function openBridgeDialog({ path, selected, sourceButton }) {
+      const matches = pathwayMatches.get(path.id);
+      const selectedName = selected ? `${selected.grade}・${selected.publisher}・${selected.unit.u}` : "主題總覽";
+      bridgeDialogTitle.textContent = path.title;
+      bridgeDialogSubtitle.textContent = selected ? `從「${selectedName}」查看跨年級關聯` : "康軒、翰林、南一已列課程單元";
+      bridgeDialogBody.innerHTML = `<p class="bridge-caveat">${path.stage}<br><br><b>銜接提問：</b>${path.question}</p><p class="hint">下列年級只列出三版本單元名稱、標籤或活動內容有明確主題線索的年級。空白年級代表現有課程清單沒有直接證據，不表示學生完全不會接觸相關先備概念。</p><div class="bridge-timeline" id="bridge-timeline"></div><p class="bridge-source">驗證依據：課程清單的章名與活動文字對照十二年國教自然科學領域課綱學習內容。此銜接為跨版本教學脈絡整理，不是出版社宣稱的先修表。對應課綱：${path.standards}</p>`;
+      const timeline = bridgeDialogBody.querySelector("#bridge-timeline");
+      for (let n = 3; n <= 9; n++) {
+        const atGrade = matches.filter(item => item.n === n);
+        const step = document.createElement("section");
+        step.className = `bridge-step${selected && selected.n === n ? " is-current" : ""}`;
+        const publisherOrder = {"康軒":0,"翰林":1,"南一":2};
+        atGrade.sort((a,b) => publisherOrder[a.publisher] - publisherOrder[b.publisher]);
+        step.innerHTML = `<div class="bridge-grade">${gradeLabel(n)}</div><div>${atGrade.length
+          ? `<h3>${n <= 6 ? "國小概念經驗" : "國中概念深化"}</h3><p>${n <= 4 ? "以觀察、描述和操作現象為主。" : n <= 6 ? "比較條件、整理證據並建立較穩定的解釋。" : "使用更抽象的模型、量化關係或系統觀點。"}</p><div class="bridge-units">${atGrade.map(item => `<div class="bridge-unit"><b>${item.publisher}｜${item.term}</b>　${item.unit.u}${item.unit.t ? `（${item.unit.t}）` : ""}</div>`).join("")}</div>`
+          : `<p class="bridge-gap">目前列出的三版本課程單元中，沒有可驗證的「${path.title}」直接對應內容。</p>`}</div>`;
+        timeline.appendChild(step);
+      }
+      bridgeDialog.showModal();
+      bridgeDialog.querySelector(".dialog-close").focus();
+      bridgeDialog.dataset.returnFocus = sourceButton ? "unit" : "overview";
+      bridgeDialog._returnElement = sourceButton || null;
+    }
 
     function escapeRegExp(value) {
       return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -2152,7 +2297,8 @@
             pubEl.dataset.publisher = publisher;
             pubEl.innerHTML = `<h4>${publisher}</h4>` + units.map(unit => `
               <div class="unit">
-                <div class="unit-title"><span class="dot"></span>${highlight(unit.u, query)}</div>
+                <button type="button" class="unit-trigger" data-unit-trigger data-level-name="${level}" data-grade="${grade}" data-publisher-name="${publisher}" data-unit-index="${units.indexOf(unit)}" aria-label="查看${grade} ${publisher}版本：${unit.u}的跨年級銜接"><span class="dot"></span><span>${highlight(unit.u, query)}</span></button>
+                ${findPathwaysForUnit(unit).length ? `<span class="bridge-hint">銜接主題：${findPathwaysForUnit(unit)[0].title}</span>` : `<span class="bridge-hint">點擊查看跨年級對照</span>`}
                 ${unit.t ? `<span class="tagline">${highlight(unit.t, query)}</span>` : ""}
                 <ul>${unit.l.map(item => `<li>${highlight(item, query)}</li>`).join("")}</ul>
               </div>
@@ -2189,7 +2335,32 @@
     });
 
     searchInput.addEventListener("input", render);
+    content.addEventListener("click", event => {
+      const button = event.target.closest("[data-unit-trigger]");
+      if (!button) return;
+      const unit = data[button.dataset.levelName][button.dataset.grade][button.dataset.publisherName][Number(button.dataset.unitIndex)];
+      const paths = findPathwaysForUnit(unit);
+      const selected = { n: gradeNums[button.dataset.grade[0]], grade: button.dataset.grade, publisher: button.dataset.publisherName, unit };
+      if (paths.length) openBridgeDialog({ path: paths[0], selected, sourceButton: button });
+      else {
+        const title = `${button.dataset.grade}・${button.dataset.publisherName}・${unit.u}`;
+        bridgeDialogTitle.textContent = "此單元的跨年級銜接";
+        bridgeDialogSubtitle.textContent = title;
+        bridgeDialogBody.innerHTML = `<p class="bridge-caveat">目前已列課程資料中，沒有找到可直接驗證的跨年級同主題單元。這份課程架構只整理章名和活動綱要；請勿僅因概念相近就推定為先修關係。</p><p>可以用上方搜尋功能查看相近單元；若補入該單元的官方節次內容，銜接索引即可再核對。</p>`;
+        bridgeDialog.showModal();
+        bridgeDialog.querySelector(".dialog-close").focus();
+        bridgeDialog._returnElement = button;
+      }
+    });
+    bridgeList.addEventListener("click", event => {
+      const button = event.target.closest("[data-bridge-path]");
+      if (button) openBridgeDialog({ path: usablePathways.find(path => path.id === button.dataset.bridgePath), sourceButton: button });
+    });
+    bridgeDialog.querySelector(".dialog-close").addEventListener("click", () => bridgeDialog.close());
+    bridgeDialog.addEventListener("click", event => { if (event.target === bridgeDialog) bridgeDialog.close(); });
+    bridgeDialog.addEventListener("close", () => { if (bridgeDialog._returnElement?.isConnected) bridgeDialog._returnElement.focus(); });
     render();
+    renderBridgeOverview();
   </script>
 </body>
 </html>
