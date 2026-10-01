@@ -60,8 +60,10 @@
     .lead {
       max-width: 930px;
       margin: 0;
-      color: var(--muted);
-      font-size: clamp(1rem, 2vw, 1.15rem);
+      color: #334155;
+      font-size: clamp(1.3rem, 2.5vw, 1.55rem);
+      font-weight: 600;
+      line-height: 1.75;
     }
 
     .wrap {
@@ -356,46 +358,55 @@
     }
 
     .unit-trigger:hover, .unit-trigger:focus-visible { z-index: 6; color: #1d4ed8; background: #eff6ff; }
-    .unit-trigger::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      z-index: 8;
-      top: calc(100% + 5px);
-      left: 12px;
-      max-width: min(390px, calc(100vw - 72px));
-      padding: 8px 12px;
-      border: 1px solid #f59e0b;
-      border-radius: 10px;
-      background: #fef08a;
-      color: #713f12;
-      box-shadow: 0 8px 20px rgba(120, 53, 15, .2);
-      font-size: .88rem;
-      font-weight: 900;
-      line-height: 1.45;
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-      transform: translateY(-3px);
-      transition: opacity .16s ease, transform .16s ease, visibility .16s;
-    }
-    .unit-trigger:hover::after, .unit-trigger:focus-visible::after {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
     .unit-trigger:hover + .bridge-hint, .unit-trigger:focus-visible + .bridge-hint {
       color: #92400e;
       background: #fef3c7;
       border-color: #f59e0b;
     }
-    .unit-trigger:focus-visible, .bridge-card:focus-visible, .bridge-open:focus-visible,
-    .dialog-close:focus-visible { outline: 3px solid #60a5fa; outline-offset: 3px; }
+    .unit-trigger:focus-visible, .bridge-card:focus-visible, .bridge-pin:focus-visible,
+    .bridge-popover-close:focus-visible { outline: 3px solid #60a5fa; outline-offset: 3px; }
     .unit-trigger .dot { margin-top: .55rem; }
     .bridge-hint { display: inline-flex; margin: -2px 0 0 17px; border: 1px solid #a5f3fc; border-radius: 999px; padding: 2px 9px; background: #ecfeff; color: #0e7490; font-size: .82rem; font-weight: 800; transition: color .16s ease, background .16s ease, border-color .16s ease; }
-    @media (prefers-reduced-motion: reduce) {
-      .unit-trigger::after, .bridge-hint { transition: none; }
-      .unit-trigger::after { transform: none; }
+    .bridge-popover {
+      position: fixed;
+      z-index: 60;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      width: min(570px, calc(100vw - 24px));
+      max-height: min(78vh, 780px);
+      overflow: hidden;
+      border: 1px solid #93c5fd;
+      border-radius: 16px;
+      background: #fff;
+      color: var(--ink);
+      box-shadow: 0 20px 60px rgba(15, 23, 42, .28);
     }
+    .bridge-popover[hidden] { display: none; }
+    .bridge-popover-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 15px 17px; border-bottom: 1px solid #bfdbfe; background: linear-gradient(135deg, #eff6ff, #ecfeff); }
+    .bridge-popover-heading { min-width: 0; }
+    .bridge-popover-head h2 { margin: 0; color: #1e3a8a; font-size: 1.05rem; line-height: 1.4; }
+    .bridge-popover-head p { margin: 4px 0 0; color: #475569; font-size: .86rem; }
+    .bridge-popover-actions { display: flex; flex: 0 0 auto; gap: 7px; }
+    .bridge-pin, .bridge-popover-close { min-width: 40px; min-height: 40px; border: 1px solid #bfdbfe; border-radius: 10px; background: white; color: #1e3a8a; font: inherit; font-weight: 900; cursor: pointer; }
+    .bridge-pin[aria-pressed="true"] { border-color: #f59e0b; background: #fef3c7; color: #92400e; }
+    .bridge-popover-body { min-height: 0; overflow: auto; padding: 14px 16px 18px; }
+    .bridge-popover-path + .bridge-popover-path { margin-top: 18px; padding-top: 16px; border-top: 2px solid #dbeafe; }
+    .bridge-popover-path h3 { margin: 0 0 5px; color: #1d4ed8; font-size: 1rem; }
+    .bridge-popover-path > p { margin: 0 0 10px; color: #475569; font-size: .9rem; }
+    .bridge-popover .bridge-caveat { font-size: .88rem; }
+    .bridge-popover .bridge-timeline { gap: 7px; }
+    .bridge-popover .bridge-step { grid-template-columns: 66px minmax(0,1fr); gap: 9px; padding: 10px; }
+    .bridge-popover .bridge-step h3 { font-size: .92rem; }
+    .bridge-popover .bridge-step p, .bridge-popover .bridge-unit { font-size: .84rem; }
+    .bridge-popover .bridge-source { margin-top: 9px; font-size: .8rem; }
+    @media (max-width: 560px) {
+      .lead { font-size: clamp(1.25rem, 5vw, 1.4rem); }
+      .bridge-popover { width: calc(100vw - 24px); max-height: min(72vh, 680px); }
+      .bridge-popover-head { padding: 12px; }
+      .bridge-popover-body { padding: 11px 12px 14px; }
+      .bridge-popover .bridge-step { grid-template-columns: 1fr; gap: 3px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .bridge-hint { transition: none; } }
 
     .bridge-overview { margin-top: 38px; padding: 22px; border: 1px solid var(--line); border-radius: var(--radius); background: #f8fbff; }
     .bridge-overview h2 { margin: 0 0 5px; }
@@ -406,13 +417,6 @@
     .bridge-card strong { display: block; margin-bottom: 5px; color: #1d4ed8; }
     .bridge-card span { color: var(--muted); font-size: .9rem; }
 
-    .bridge-dialog { width: min(760px, calc(100% - 24px)); max-height: min(82vh, 820px); padding: 0; overflow: hidden; border: 1px solid #cbd5e1; border-radius: 18px; color: var(--ink); box-shadow: 0 24px 80px rgba(15,23,42,.28); }
-    .bridge-dialog::backdrop { background: rgba(15,23,42,.54); backdrop-filter: blur(3px); }
-    .dialog-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 20px 22px 15px; background: linear-gradient(135deg,#eff6ff,#f0fdfa); border-bottom: 1px solid var(--line); }
-    .dialog-head h2 { margin: 0; font-size: 1.3rem; line-height: 1.35; }
-    .dialog-head p { margin: 5px 0 0; color: var(--muted); }
-    .dialog-close { flex: 0 0 auto; min-width: 42px; min-height: 42px; border: 1px solid var(--line); border-radius: 50%; background: white; color: var(--ink); font-size: 1.4rem; cursor: pointer; }
-    .dialog-body { max-height: calc(min(82vh, 820px) - 106px); overflow: auto; padding: 18px 22px 24px; }
     .bridge-caveat { margin: 0 0 15px; padding: 11px 13px; border-left: 4px solid #0f766e; border-radius: 6px; background: #f0fdfa; color: #134e4a; font-size: .94rem; }
     .bridge-timeline { display: grid; gap: 10px; }
     .bridge-step { display: grid; grid-template-columns: 78px minmax(0,1fr); gap: 12px; padding: 13px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
@@ -430,7 +434,6 @@
     @media (max-width: 560px) {
       .bridge-grid { grid-template-columns: 1fr; }
       .bridge-overview { padding: 16px; }
-      .dialog-head, .dialog-body { padding-left: 15px; padding-right: 15px; }
       .bridge-step { grid-template-columns: 1fr; gap: 3px; }
     }
     @media (prefers-reduced-motion: reduce) { .bridge-card:hover { transform: none; } }
@@ -543,18 +546,21 @@
 
     <section class="bridge-overview" id="bridge-overview" aria-labelledby="bridge-overview-title">
       <h2 id="bridge-overview-title">三至九年級課程銜接地圖</h2>
-      <p class="bridge-intro">選一個主題查看三家版本在各年級實際列出的相關單元。也可直接點上方任一單元名稱查看它的跨年級脈絡。</p>
+      <p class="bridge-intro">🖱️ 移入課程單元或主題卡即可預覽完整銜接內容；移開自動收起。點擊可釘選，手機可點按查看。</p>
       <div class="bridge-grid" id="bridge-list"></div>
     </section>
   </main>
 
-  <dialog class="bridge-dialog" id="bridge-dialog" aria-labelledby="bridge-dialog-title">
-    <div class="dialog-head">
-      <div><h2 id="bridge-dialog-title">課程銜接</h2><p id="bridge-dialog-subtitle"></p></div>
-      <button class="dialog-close" type="button" aria-label="關閉銜接說明">×</button>
+  <aside class="bridge-popover" id="bridge-popover" role="region" aria-labelledby="bridge-popover-title" hidden>
+    <div class="bridge-popover-head">
+      <div class="bridge-popover-heading"><h2 id="bridge-popover-title">課程銜接</h2><p id="bridge-popover-subtitle"></p></div>
+      <div class="bridge-popover-actions">
+        <button class="bridge-pin" id="bridge-pin" type="button" aria-pressed="false" aria-label="釘選銜接說明">📌 釘選</button>
+        <button class="bridge-popover-close" id="bridge-popover-close" type="button" aria-label="關閉銜接說明">×</button>
+      </div>
     </div>
-    <div class="dialog-body" id="bridge-dialog-body"></div>
-  </dialog>
+    <div class="bridge-popover-body" id="bridge-popover-body"></div>
+  </aside>
 
   <script id="course-data" type="application/json">
 {
@@ -2215,13 +2221,20 @@
     const content = document.getElementById("content");
     const searchInput = document.getElementById("search");
     const noResult = document.getElementById("noResult");
-    const bridgeDialog = document.getElementById("bridge-dialog");
+    const bridgePopover = document.getElementById("bridge-popover");
     const bridgeList = document.getElementById("bridge-list");
-    const bridgeDialogTitle = document.getElementById("bridge-dialog-title");
-    const bridgeDialogSubtitle = document.getElementById("bridge-dialog-subtitle");
-    const bridgeDialogBody = document.getElementById("bridge-dialog-body");
+    const bridgePopoverTitle = document.getElementById("bridge-popover-title");
+    const bridgePopoverSubtitle = document.getElementById("bridge-popover-subtitle");
+    const bridgePopoverBody = document.getElementById("bridge-popover-body");
+    const bridgePin = document.getElementById("bridge-pin");
+    const bridgePopoverClose = document.getElementById("bridge-popover-close");
     let currentLevel = "all";
     let currentPublisher = "all";
+    let activeBridgeAnchor = null;
+    let bridgePinned = false;
+    let pointerOnBridgePopover = false;
+    let bridgeHideTimer = 0;
+    let lastPointerType = "";
 
     // 只依課程表已列出的單元名稱、標籤與活動文字配對；跨冊說明屬課綱導向的教學脈絡整理。
     const BRIDGE_PATHWAYS = [
@@ -2263,28 +2276,89 @@
       }).join("");
     }
 
-    function openBridgeDialog({ path, selected, sourceButton }) {
+    function renderBridgePath(path, selected) {
       const matches = pathwayMatches.get(path.id);
-      const selectedName = selected ? `${selected.grade}・${selected.publisher}・${selected.unit.u}` : "主題總覽";
-      bridgeDialogTitle.textContent = path.title;
-      bridgeDialogSubtitle.textContent = selected ? `從「${selectedName}」查看跨年級關聯` : "康軒、翰林、南一已列課程單元";
-      bridgeDialogBody.innerHTML = `<p class="bridge-caveat">${path.stage}<br><br><b>銜接提問：</b>${path.question}</p><p class="hint">下列年級只列出三版本單元名稱、標籤或活動內容有明確主題線索的年級。空白年級代表現有課程清單沒有直接證據，不表示學生完全不會接觸相關先備概念。</p><div class="bridge-timeline" id="bridge-timeline"></div><p class="bridge-source">驗證依據：課程清單的章名與活動文字對照十二年國教自然科學領域課綱學習內容。此銜接為跨版本教學脈絡整理，不是出版社宣稱的先修表。對應課綱：${path.standards}</p>`;
-      const timeline = bridgeDialogBody.querySelector("#bridge-timeline");
+      let timeline = "";
       for (let n = 3; n <= 9; n++) {
         const atGrade = matches.filter(item => item.n === n);
-        const step = document.createElement("section");
-        step.className = `bridge-step${selected && selected.n === n ? " is-current" : ""}`;
         const publisherOrder = {"康軒":0,"翰林":1,"南一":2};
         atGrade.sort((a,b) => publisherOrder[a.publisher] - publisherOrder[b.publisher]);
-        step.innerHTML = `<div class="bridge-grade">${gradeLabel(n)}</div><div>${atGrade.length
+        timeline += `<section class="bridge-step${selected && selected.n === n ? " is-current" : ""}"><div class="bridge-grade">${gradeLabel(n)}</div><div>${atGrade.length
           ? `<h3>${n <= 6 ? "國小概念經驗" : "國中概念深化"}</h3><p>${n <= 4 ? "以觀察、描述和操作現象為主。" : n <= 6 ? "比較條件、整理證據並建立較穩定的解釋。" : "使用更抽象的模型、量化關係或系統觀點。"}</p><div class="bridge-units">${atGrade.map(item => `<div class="bridge-unit"><b>${item.publisher}｜${item.term}</b>　${item.unit.u}${item.unit.t ? `（${item.unit.t}）` : ""}</div>`).join("")}</div>`
-          : `<p class="bridge-gap">目前列出的三版本課程單元中，沒有可驗證的「${path.title}」直接對應內容。</p>`}</div>`;
-        timeline.appendChild(step);
+          : `<p class="bridge-gap">目前列出的三版本課程單元中，沒有可驗證的「${path.title}」直接對應內容。</p>`}</div></section>`;
       }
-      bridgeDialog.showModal();
-      bridgeDialog.querySelector(".dialog-close").focus();
-      bridgeDialog.dataset.returnFocus = sourceButton ? "unit" : "overview";
-      bridgeDialog._returnElement = sourceButton || null;
+      return `<section class="bridge-popover-path"><h3>${path.title}</h3><p>${path.stage}<br><b>銜接提問：</b>${path.question}</p><div class="bridge-timeline">${timeline}</div><p class="bridge-source">對應課綱：${path.standards}。銜接依課程單元文字與課綱整理，並非出版社公布的先修規定。</p></section>`;
+    }
+
+    function positionBridgePopover(anchor) {
+      bridgePopover.hidden = false;
+      bridgePopover.style.left = "12px";
+      bridgePopover.style.top = "12px";
+      const anchorRect = anchor.getBoundingClientRect();
+      const panelRect = bridgePopover.getBoundingClientRect();
+      let left = anchorRect.right + 12;
+      if (left + panelRect.width > window.innerWidth - 12) left = anchorRect.left - panelRect.width - 12;
+      left = Math.max(12, Math.min(left, window.innerWidth - panelRect.width - 12));
+      const top = Math.max(12, Math.min(anchorRect.top, window.innerHeight - panelRect.height - 12));
+      bridgePopover.style.left = `${left}px`;
+      bridgePopover.style.top = `${top}px`;
+    }
+
+    function setBridgePinned(value) {
+      bridgePinned = value;
+      bridgePin.setAttribute("aria-pressed", String(value));
+      bridgePin.textContent = value ? "📍 已釘選" : "📌 釘選";
+      bridgePin.setAttribute("aria-label", value ? "解除釘選銜接說明" : "釘選銜接說明");
+      bridgePopover.classList.toggle("is-pinned", value);
+    }
+
+    function closeBridgePopover() {
+      window.clearTimeout(bridgeHideTimer);
+      bridgePopover.hidden = true;
+      pointerOnBridgePopover = false;
+      if (activeBridgeAnchor) activeBridgeAnchor.setAttribute("aria-expanded", "false");
+      activeBridgeAnchor = null;
+      setBridgePinned(false);
+    }
+
+    function showBridgePopover(anchor, { unit = null, path = null } = {}) {
+      if (bridgePinned && activeBridgeAnchor !== anchor) return;
+      window.clearTimeout(bridgeHideTimer);
+      if (activeBridgeAnchor && activeBridgeAnchor !== anchor) activeBridgeAnchor.setAttribute("aria-expanded", "false");
+      activeBridgeAnchor = anchor;
+      anchor.setAttribute("aria-expanded", "true");
+      const paths = unit ? findPathwaysForUnit(unit) : path ? [path] : [];
+      const label = unit ? `${anchor.dataset.grade}・${anchor.dataset.publisherName}・${unit.u}` : path.title;
+      bridgePopoverTitle.textContent = unit ? "🔗 銜接版本｜相關課程" : `🔗 ${path.title}`;
+      bridgePopoverSubtitle.textContent = unit ? `從「${label}」查看全部相關年級與版本` : "康軒、翰林、南一｜三至九年級課程脈絡";
+      bridgePopoverBody.innerHTML = paths.length
+        ? `<p class="hint">以下列出此單元命中的所有銜接主題、三家版本單元及三至九年級的對照；空白年級表示目前課程清單沒有直接證據。</p>${paths.map(item => renderBridgePath(item, { n: gradeNums[anchor.dataset.grade?.[0]], grade: anchor.dataset.grade })).join("")}`
+        : `<p class="bridge-caveat">${unit ? `「${label}」目前沒有可直接驗證的跨年級同主題課程。` : "此主題目前沒有可列出的跨年級單元。"}本頁只依已列出的單元與活動內容建立連結，不會把概念相近推定成先修關係。</p>`;
+      bridgePopover.hidden = false;
+      positionBridgePopover(anchor);
+    }
+
+    function scheduleBridgePopoverHide() {
+      window.clearTimeout(bridgeHideTimer);
+      bridgeHideTimer = window.setTimeout(() => {
+        const anchorHovered = activeBridgeAnchor?.matches(":hover");
+        if (!bridgePinned && !pointerOnBridgePopover && !anchorHovered) closeBridgePopover();
+      }, 320);
+    }
+
+    function getUnitFromButton(button) {
+      return data[button.dataset.levelName][button.dataset.grade][button.dataset.publisherName][Number(button.dataset.unitIndex)];
+    }
+
+    function toggleBridgePinFromAnchor(anchor) {
+      if (bridgePinned && activeBridgeAnchor === anchor) {
+        setBridgePinned(false);
+        scheduleBridgePopoverHide();
+        return;
+      }
+      if (anchor.matches("[data-unit-trigger]")) showBridgePopover(anchor, { unit: getUnitFromButton(anchor) });
+      else showBridgePopover(anchor, { path: usablePathways.find(item => item.id === anchor.dataset.bridgePath) });
+      setBridgePinned(true);
     }
 
     function escapeRegExp(value) {
@@ -2301,6 +2375,7 @@
     }
 
     function render() {
+      closeBridgePopover();
       const query = searchInput.value.trim();
       const queryLower = query.toLowerCase();
       content.innerHTML = "";
@@ -2334,8 +2409,8 @@
             pubEl.dataset.publisher = publisher;
             pubEl.innerHTML = `<h4>${publisher}</h4>` + units.map(unit => `
               <div class="unit">
-                <button type="button" class="unit-trigger" data-unit-trigger data-level-name="${level}" data-grade="${grade}" data-publisher-name="${publisher}" data-unit-index="${units.indexOf(unit)}" data-tooltip="🔗 銜接版本｜點擊查看此單元與其他年級、版本的相關課程" aria-description="銜接版本：點擊查看此單元與其他年級及版本的相關課程" aria-label="查看${grade} ${publisher}版本：${unit.u}的跨年級銜接"><span class="dot"></span><span>${highlight(unit.u, query)}</span></button>
-                ${findPathwaysForUnit(unit).length ? `<span class="bridge-hint">🔗 銜接主題：${findPathwaysForUnit(unit)[0].title}</span>` : `<span class="bridge-hint">🔗 點擊查看跨年級對照</span>`}
+              <button type="button" class="unit-trigger" data-unit-trigger data-level-name="${level}" data-grade="${grade}" data-publisher-name="${publisher}" data-unit-index="${units.indexOf(unit)}" aria-expanded="false" aria-controls="bridge-popover" aria-description="移入或聚焦可預覽銜接課程，點擊釘選；手機可點按查看" aria-label="預覽${grade} ${publisher}版本：${unit.u}的跨年級銜接"><span class="dot"></span><span>${highlight(unit.u, query)}</span></button>
+                ${findPathwaysForUnit(unit).length ? `<span class="bridge-hint">🔗 銜接主題：${findPathwaysForUnit(unit).map(path => path.title).join("、")}</span>` : `<span class="bridge-hint">🔗 移入預覽跨年級對照</span>`}
                 ${unit.t ? `<span class="tagline">${highlight(unit.t, query)}</span>` : ""}
                 <ul>${unit.l.map(item => `<li>${highlight(item, query)}</li>`).join("")}</ul>
               </div>
@@ -2371,31 +2446,65 @@
       });
     });
 
-    searchInput.addEventListener("input", render);
-    content.addEventListener("click", event => {
-      const button = event.target.closest("[data-unit-trigger]");
-      if (!button) return;
-      const unit = data[button.dataset.levelName][button.dataset.grade][button.dataset.publisherName][Number(button.dataset.unitIndex)];
-      const paths = findPathwaysForUnit(unit);
-      const selected = { n: gradeNums[button.dataset.grade[0]], grade: button.dataset.grade, publisher: button.dataset.publisherName, unit };
-      if (paths.length) openBridgeDialog({ path: paths[0], selected, sourceButton: button });
-      else {
-        const title = `${button.dataset.grade}・${button.dataset.publisherName}・${unit.u}`;
-        bridgeDialogTitle.textContent = "此單元的跨年級銜接";
-        bridgeDialogSubtitle.textContent = title;
-        bridgeDialogBody.innerHTML = `<p class="bridge-caveat">目前已列課程資料中，沒有找到可直接驗證的跨年級同主題單元。這份課程架構只整理章名和活動綱要；請勿僅因概念相近就推定為先修關係。</p><p>可以用上方搜尋功能查看相近單元；若補入該單元的官方節次內容，銜接索引即可再核對。</p>`;
-        bridgeDialog.showModal();
-        bridgeDialog.querySelector(".dialog-close").focus();
-        bridgeDialog._returnElement = button;
-      }
+    const showForButton = button => showBridgePopover(button, { unit: getUnitFromButton(button) });
+    const showForCard = button => showBridgePopover(button, { path: usablePathways.find(path => path.id === button.dataset.bridgePath) });
+    const findTrigger = event => event.target.closest?.("[data-unit-trigger], [data-bridge-path]");
+    document.addEventListener("pointerdown", event => { lastPointerType = event.pointerType; }, true);
+    for (const container of [content, bridgeList]) {
+      container.addEventListener("pointerover", event => {
+        const button = findTrigger(event);
+        if (!button || event.pointerType === "touch" || button.contains(event.relatedTarget)) return;
+        if (bridgePinned && activeBridgeAnchor !== button) return;
+        button.matches("[data-unit-trigger]") ? showForButton(button) : showForCard(button);
+      });
+      container.addEventListener("pointerout", event => {
+        const button = findTrigger(event);
+        if (button && !button.contains(event.relatedTarget)) scheduleBridgePopoverHide();
+      });
+      container.addEventListener("focusin", event => {
+        const button = findTrigger(event);
+        if (!button || (bridgePinned && activeBridgeAnchor !== button)) return;
+        button.matches("[data-unit-trigger]") ? showForButton(button) : showForCard(button);
+      });
+      container.addEventListener("focusout", event => {
+        if (!bridgePopover.contains(event.relatedTarget)) scheduleBridgePopoverHide();
+      });
+      container.addEventListener("click", event => {
+        const button = findTrigger(event);
+        if (!button) return;
+        const isTouch = lastPointerType === "touch" || window.matchMedia("(hover: none)").matches;
+        if (isTouch || event.detail === 0) {
+          if (activeBridgeAnchor !== button || bridgePopover.hidden) {
+            button.matches("[data-unit-trigger]") ? showForButton(button) : showForCard(button);
+          }
+          setBridgePinned(true);
+        } else {
+          toggleBridgePinFromAnchor(button);
+        }
+      });
+    }
+    bridgePopover.addEventListener("pointerenter", () => {
+      pointerOnBridgePopover = true;
+      window.clearTimeout(bridgeHideTimer);
     });
-    bridgeList.addEventListener("click", event => {
-      const button = event.target.closest("[data-bridge-path]");
-      if (button) openBridgeDialog({ path: usablePathways.find(path => path.id === button.dataset.bridgePath), sourceButton: button });
+    bridgePopover.addEventListener("pointerleave", () => {
+      pointerOnBridgePopover = false;
+      scheduleBridgePopoverHide();
     });
-    bridgeDialog.querySelector(".dialog-close").addEventListener("click", () => bridgeDialog.close());
-    bridgeDialog.addEventListener("click", event => { if (event.target === bridgeDialog) bridgeDialog.close(); });
-    bridgeDialog.addEventListener("close", () => { if (bridgeDialog._returnElement?.isConnected) bridgeDialog._returnElement.focus(); });
+    bridgePin.addEventListener("click", () => {
+      const next = !bridgePinned;
+      setBridgePinned(next);
+      if (!next) scheduleBridgePopoverHide();
+    });
+    bridgePopoverClose.addEventListener("click", closeBridgePopover);
+    document.addEventListener("keydown", event => { if (event.key === "Escape" && !bridgePopover.hidden) closeBridgePopover(); });
+    window.addEventListener("resize", () => {
+      if (!bridgePopover.hidden && activeBridgeAnchor?.isConnected) positionBridgePopover(activeBridgeAnchor);
+    });
+    window.addEventListener("scroll", () => {
+      if (!bridgePopover.hidden && activeBridgeAnchor?.isConnected) positionBridgePopover(activeBridgeAnchor);
+    }, true);
+    searchInput.addEventListener("input", () => { closeBridgePopover(); render(); });
     render();
     renderBridgeOverview();
   </script>
