@@ -2282,11 +2282,10 @@
       let timeline = "";
       for (let n = 3; n <= 9; n++) {
         const atGrade = matches.filter(item => item.n === n);
+        if (!atGrade.length) continue;
         const publisherOrder = {"康軒":0,"翰林":1,"南一":2};
         atGrade.sort((a,b) => publisherOrder[a.publisher] - publisherOrder[b.publisher]);
-        timeline += `<section class="bridge-step${selected && selected.n === n ? " is-current" : ""}"><div class="bridge-grade">${gradeLabel(n)}</div><div>${atGrade.length
-          ? `<h3>${n <= 6 ? "國小概念經驗" : "國中概念深化"}</h3><p>${n <= 4 ? "以觀察、描述和操作現象為主。" : n <= 6 ? "比較條件、整理證據並建立較穩定的解釋。" : "使用更抽象的模型、量化關係或系統觀點。"}</p><div class="bridge-units">${atGrade.map(item => `<div class="bridge-unit"><b>${item.publisher}｜${item.term}</b>　${item.unit.u}${item.unit.t ? `（${item.unit.t}）` : ""}</div>`).join("")}</div>`
-          : `<p class="bridge-gap">目前列出的三版本課程單元中，沒有可驗證的「${path.title}」直接對應內容。</p>`}</div></section>`;
+        timeline += `<section class="bridge-step${selected && selected.n === n ? " is-current" : ""}"><div class="bridge-grade">${gradeLabel(n)}</div><div><h3>${n <= 6 ? "國小概念經驗" : "國中概念深化"}</h3><p>${n <= 4 ? "以觀察、描述和操作現象為主。" : n <= 6 ? "比較條件、整理證據並建立較穩定的解釋。" : "使用更抽象的模型、量化關係或系統觀點。"}</p><div class="bridge-units">${atGrade.map(item => `<div class="bridge-unit"><b>${item.publisher}｜${item.term}</b>　${item.unit.u}${item.unit.t ? `（${item.unit.t}）` : ""}</div>`).join("")}</div></div></section>`;
       }
       return `<section class="bridge-popover-path"><h3>${path.title}</h3><p>${path.stage}<br><b>銜接提問：</b>${path.question}</p><div class="bridge-timeline">${timeline}</div><p class="bridge-source">對應課綱：${path.standards}。銜接依課程單元文字與課綱整理，並非出版社公布的先修規定。</p></section>`;
     }
@@ -2333,7 +2332,7 @@
       bridgePopoverTitle.textContent = unit ? "🔗 銜接版本｜相關課程" : `🔗 ${path.title}`;
       bridgePopoverSubtitle.textContent = unit ? `從「${label}」查看全部相關年級與版本` : "康軒、翰林、南一｜三至九年級課程脈絡";
       bridgePopoverBody.innerHTML = paths.length
-        ? `<p class="hint">以下列出此單元命中的所有銜接主題、三家版本單元及三至九年級的對照；空白年級表示目前課程清單沒有直接證據。</p>${paths.map(item => renderBridgePath(item, { n: gradeNums[anchor.dataset.grade?.[0]], grade: anchor.dataset.grade })).join("")}`
+        ? `<p class="hint">以下僅列出目前課程資料中有明確單元或活動依據的年級與三家版本課程。</p>${paths.map(item => renderBridgePath(item, { n: gradeNums[anchor.dataset.grade?.[0]], grade: anchor.dataset.grade })).join("")}`
         : `<p class="bridge-caveat">${unit ? `「${label}」目前沒有可直接驗證的跨年級同主題課程。` : "此主題目前沒有可列出的跨年級單元。"}本頁只依已列出的單元與活動內容建立連結，不會把概念相近推定成先修關係。</p>`;
       bridgePopover.hidden = false;
       positionBridgePopover(anchor);
